@@ -2,12 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3f3c64cc-65d1-4b48-8552-60367fde32e8" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/filecheck/__init__.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/filecheck/fileCalculate.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/filecheck/fileScan.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/main.py" />
-      <change beforePath="$PROJECT_DIR$/.idea/guards.iml" afterPath="$PROJECT_DIR$/.idea/guards.iml" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterPath="" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -188,6 +182,14 @@
       <option name="presentableId" value="Default" />
       <updated>1517922562462</updated>
     </task>
+    <task id="LOCAL-00001" summary="计算文件md5 sha1 sha256">
+      <created>1517932004267</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1517932004267</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -221,6 +223,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="计算文件md5 sha1 sha256" />
+    <option name="LAST_COMMIT_MESSAGE" value="计算文件md5 sha1 sha256" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
