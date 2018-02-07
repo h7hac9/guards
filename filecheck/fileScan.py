@@ -20,3 +20,11 @@ class ReadFile(object):
 
     def getFileNumber(self):
         return self.file.__sizeof__()
+
+    def readFile(self, filename):
+        try:
+            with open(filename,'r') as fileHandle:
+                text = fileHandle.read().splitlines()
+            return text
+        except IOError as e:
+            print("Read File Error:"+str(e))
