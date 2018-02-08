@@ -14,7 +14,6 @@ class ReadFile(object):
         self.file = queue.Queue()
         for root, dirs, files in os.walk(self.root):
             for i in files:
-                # print(os.path.join(root, i))
                 self.file.put(os.path.join(root, i))
         return self.file
 

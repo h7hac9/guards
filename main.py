@@ -8,6 +8,7 @@ from multiprocessing import Pool
 from filecheck.fileScan import ReadFile
 from filecheck.fileCalculate import CalculateFile
 from filecheck.resultProcessing import ResultProcess
+from configurate.readyaml import yamloperation
 
 def mainfilecheck(root):
     tmp_file = str(os.getpid()) + '.txt'
@@ -48,9 +49,15 @@ def mainfilecheck(root):
         os.remove('data/' + tmp_file + '.0')
 
 def main():
-    pool = Pool()
-    for i in range(5):
-        pool.apply_async(mainfilecheck, args=('/home/asura/Documents/note',))
+    pool = Pool() #进程池
+    config = yamloperation('guards.yaml')
+    configFile = config.readConfig()
+    if configFile['directory'] is not None:
+        for i in configFile['directory']['target']:
+            print(i)
+            pool.apply_async(mainfilecheck, args=(i,))
+    # for i in range(5):
+    #     pool.apply_async(mainfilecheck, args=('/home/asura/Documents/note',))
     print('Watting .....')
     pool.close()
     pool.join()
