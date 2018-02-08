@@ -4,4 +4,5 @@
      - /home/asura/Documents/note
      - /home/asura/Documents/书籍
    time: 30
+   watchdog: True  #推荐使用watchdog
  other:

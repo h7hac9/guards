@@ -4,11 +4,13 @@ import datetime
 import os
 import time
 from multiprocessing import Pool
+from watchdog.observers import Observer
 
 from filecheck.fileScan import ReadFile
 from filecheck.fileCalculate import CalculateFile
 from filecheck.resultProcessing import ResultProcess
 from configurate.readyaml import yamloperation
+from watchfile.fileMonitoring import FileHandler
 
 def mainfilecheck(root):
     tmp_file = str(os.getpid()) + '.txt'
@@ -48,21 +50,37 @@ def mainfilecheck(root):
         os.remove('data/' + tmp_file)
         os.remove('data/' + tmp_file + '.0')
 
+def watchdogmethod(path):
+    event_handler = FileHandler()
+    observer = Observer()
+    observer.schedule(event_handler, path=path, recursive=False)
+    observer.start()
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        observer.stop()
+    observer.join()
+
 def main():
     pool = Pool() #进程池
     config = yamloperation('guards.yaml')
     configFile = config.readConfig()
-    if configFile['directory'] is not None:
+    if configFile.get("directory") is not None and configFile.get("directory").get("watchdog") is not True:
         for i in configFile['directory']['target']:
             print(i)
             pool.apply_async(mainfilecheck, args=(i,))
-    # for i in range(5):
-    #     pool.apply_async(mainfilecheck, args=('/home/asura/Documents/note',))
-    print('Watting .....')
-    pool.close()
-    pool.join()
-    # mainfilecheck('/home/asura/Documents/note')
-    pass
+        pool.close()
+        pool.join()
+
+    ##watchdog 模块
+    if configFile.get("directory") is not None and configFile.get("directory").get("watchdog") is True:
+        for i in configFile['directory']['target']:
+            pool.apply_async(watchdogmethod, args=(i,))
+        pool.close()
+        pool.join()
+
+
 
 
 
