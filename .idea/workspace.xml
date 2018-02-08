@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3f3c64cc-65d1-4b48-8552-60367fde32e8" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/configurate/__init__.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/configurate/readyaml.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/etc/guards.yaml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/filecheck/fileCalculate.py" afterPath="$PROJECT_DIR$/filecheck/fileCalculate.py" />
-      <change beforePath="$PROJECT_DIR$/filecheck/fileScan.py" afterPath="$PROJECT_DIR$/filecheck/fileScan.py" />
-      <change beforePath="$PROJECT_DIR$/filecheck/resultProcessing.py" afterPath="$PROJECT_DIR$/filecheck/resultProcessing.py" />
-      <change beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
+      <change beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -89,13 +83,13 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/customAPI/threadbook.py" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/configurate/readyaml.py" />
         <option value="$PROJECT_DIR$/filecheck/fileCalculate.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/etc/guards.yaml" />
         <option value="$PROJECT_DIR$/filecheck/fileScan.py" />
         <option value="$PROJECT_DIR$/filecheck/resultProcessing.py" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -135,11 +129,6 @@
             <path>
               <item name="guards" type="b2602c69:ProjectViewProjectNode" />
               <item name="guards" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="guards" type="b2602c69:ProjectViewProjectNode" />
-              <item name="guards" type="462c0819:PsiDirectoryNode" />
-              <item name="filecheck" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -271,7 +260,14 @@
       <option name="project" value="LOCAL" />
       <updated>1518062597779</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="完成多进程监控主机文件（每个进程监控一个文件夹）">
+      <created>1518066518578</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1518066518578</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -333,7 +329,8 @@
     <MESSAGE value="单线程检测文件更改情况" />
     <MESSAGE value="项目进度" />
     <MESSAGE value="初步完成多进程监控系统文件" />
-    <option name="LAST_COMMIT_MESSAGE" value="初步完成多进程监控系统文件" />
+    <MESSAGE value="完成多进程监控主机文件（每个进程监控一个文件夹）" />
+    <option name="LAST_COMMIT_MESSAGE" value="完成多进程监控主机文件（每个进程监控一个文件夹）" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -462,16 +459,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/data/calculate.txt.0" />
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="110">
-            <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/4220.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -599,6 +586,17 @@
         <state relative-caret-position="638">
           <caret line="35" column="21" lean-forward="true" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="132">
+            <caret line="6" column="38" lean-forward="false" selection-start-line="6" selection-start-column="38" selection-end-line="6" selection-end-column="38" />
+            <folding />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
