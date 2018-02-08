@@ -5,6 +5,7 @@ import hashlib
 import difflib
 import filecmp
 import queue
+import os
 
 from .fileScan import ReadFile
 
@@ -26,11 +27,11 @@ class CalculateFile(object):
             fopen.writelines(file_name+"\t"+m.hexdigest()+"\t"+sh1.hexdigest()+"\t"+sh256.hexdigest()+"\n")
         fopen.close()
 
-    def comparison(self, ):
+    def comparison(self, strFile):
         line_result = queue.Queue()
-        if not filecmp.cmp(r'data/calculate.txt',r'data/calculate.txt.0'):
-            text1 = ReadFile(root='').readFile(filename='data/calculate.txt')
-            text2 = ReadFile(root='').readFile(filename='data/calculate.txt.0')
+        if not filecmp.cmp(r'data/'+strFile,r'data/'+strFile+'.0'):
+            text1 = ReadFile(root='').readFile(filename='data/'+strFile)
+            text2 = ReadFile(root='').readFile(filename='data/'+strFile+'.0')
             d = difflib.Differ()  # 创建Differ对象
             diff = d.compare(text1, text2)
             for i in list(diff):

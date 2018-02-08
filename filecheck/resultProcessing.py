@@ -17,3 +17,5 @@ class ResultProcess(object):
             elif self.result[i].split(' ')[0] == '-':
                 print(u"{0}文件被删除".format(self.result[i].split(' ')[1]))
                 i += 1
+            else:
+                i += 1
