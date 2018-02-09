@@ -11,6 +11,7 @@ from filecheck.fileCalculate import CalculateFile
 from filecheck.resultProcessing import ResultProcess
 from configurate.readyaml import yamloperation
 from watchfile.fileMonitoring import FileHandler
+from processcheck.processScan import ProcessScaner
 
 def mainfilecheck(root):
     tmp_file = str(os.getpid()) + '.txt'
@@ -63,23 +64,29 @@ def watchdogmethod(path):
     observer.join()
 
 def main():
-    pool = Pool() #进程池
-    config = yamloperation('guards.yaml')
-    configFile = config.readConfig()
-    if configFile.get("directory") is not None and configFile.get("directory").get("watchdog") is not True:
-        for i in configFile['directory']['target']:
-            print(i)
-            pool.apply_async(mainfilecheck, args=(i,))
-        pool.close()
-        pool.join()
-
-    ##watchdog 模块
-    if configFile.get("directory") is not None and configFile.get("directory").get("watchdog") is True:
-        for i in configFile['directory']['target']:
-            pool.apply_async(watchdogmethod, args=(i,))
-        pool.close()
-        pool.join()
-
+    # pool = Pool() #进程池
+    # config = yamloperation('guards.yaml')
+    # configFile = config.readConfig()
+    # if configFile.get("directory") is not None and configFile.get("directory").get("watchdog") is not True:
+    #     for i in configFile['directory']['target']:
+    #         print(i)
+    #         pool.apply_async(mainfilecheck, args=(i,))
+    #     pool.close()
+    #     pool.join()
+    #
+    # ##watchdog 模块
+    # if configFile.get("directory") is not None and configFile.get("directory").get("watchdog") is True:
+    #     for i in configFile['directory']['target']:
+    #         pool.apply_async(watchdogmethod, args=(i,))
+    #     pool.close()
+    #     pool.join()
+    processScan = ProcessScaner()
+    while True:
+        processInformation = processScan.getPids()
+        time.sleep(10)
+        newProcessInformation = processScan.getPids()
+        processScan.pidContrast(processInformation.keys(), newProcessInformation.keys(), processInformation,
+                                newProcessInformation)
 
 
 
