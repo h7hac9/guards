@@ -3,6 +3,10 @@
    target:
      - /home/asura/Documents/note
      - /home/asura/Documents/书籍
-   time: 30
+   time: 30 #单位s
    watchdog: True  #推荐使用watchdog
+ process:
+   change: True   #进程检查(是否有新进程创建)
+   privilgeEscalation: True  #提权行为检查
+   timeout: 10 #单位s
  other:

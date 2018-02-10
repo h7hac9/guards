@@ -63,6 +63,17 @@ def watchdogmethod(path):
         observer.stop()
     observer.join()
 
+def processCheck(privilgeEscalation, timeout):
+    processScan = ProcessScaner()
+    while True:
+        processInformation = processScan.getPids()
+        time.sleep(int(timeout))
+        newProcessInformation = processScan.getPids()
+        pidList = processScan.pidContrast(processInformation.keys(), newProcessInformation.keys(), processInformation,
+                                          newProcessInformation)
+        if privilgeEscalation is True:
+            processScan.privilgeEscalation(pidList=pidList)
+
 def main():
     pool = Pool() #进程池
     config = yamloperation('guards.yaml')
@@ -71,24 +82,18 @@ def main():
         for i in configFile['directory']['target']:
             print(i)
             pool.apply_async(mainfilecheck, args=(i,))
-        pool.close()
-        pool.join()
 
-    ##watchdog 模块
+    #watchdog 模块
     if configFile.get("directory") is not None and configFile.get("directory").get("watchdog") is True:
         for i in configFile['directory']['target']:
             pool.apply_async(watchdogmethod, args=(i,))
-        pool.close()
-        pool.join()
 
     #======进程监控=========
-    # processScan = ProcessScaner()
-    # while True:
-    #     processInformation = processScan.getPids()
-    #     time.sleep(10)
-    #     newProcessInformation = processScan.getPids()
-    #     processScan.pidContrast(processInformation.keys(), newProcessInformation.keys(), processInformation,
-    #                             newProcessInformation)
+    if configFile.get("process").get("change") is True:
+        pool.apply_async(processCheck, args=(configFile.get("process").get("privilgeEscalation"),configFile.get("process").get("timeout"),))
+
+    pool.close()
+    pool.join()
 
 
 
