@@ -19,3 +19,7 @@ sudo apt-get install python3.5-dev
 #centos环境
 yum install -y python3.5-devel
 ```
+2. ssdeep安装方法
+```shell
+https://python-ssdeep.readthedocs.io/en/latest/installation.html
+```
