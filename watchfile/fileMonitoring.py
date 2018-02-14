@@ -1,15 +1,21 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/python
 
+import os
+
 from watchdog.events import FileSystemEventHandler
 from webshellcheck import webshellScan
-import os
+from configurate import readyaml
 
 
 class FileHandler(FileSystemEventHandler):
     """
     继承事件处理类FileSystemEventHandler
     """
+    def __init__(self):
+        super(FileHandler, self).__init__()
+        self.config = readyaml.yamloperation('guards.yaml')
+        self.configFile = self.config.readConfig()
     def on_created(self, event):
         """
         重写FileSystemEventHandler类的on_created方法
@@ -20,12 +26,16 @@ class FileHandler(FileSystemEventHandler):
             print(u"{} 文件夹被创建".format(event.src_path))
         else :
             print(u"{} 文件被创建".format(event.src_path))
-        if os.path.isfile(event.src_path):
-            webshellscanner = webshellScan.WebshellScanner()
-            message = webshellscanner.file2shellCompare(event.src_path)
-            if message is not "True":
-                print(u"检测到webshell，已删除,所属类型:{}".format(message))
-        pass
+        if self.configFile.get('webshell') is not None and self.configFile.get('webshell').get('check') is True:
+            if os.path.isfile(event.src_path):
+                webshellscanner = webshellScan.WebshellScanner()
+                message = webshellscanner.file2shellCompare(event.src_path, self.configFile.get('webshell').get('delpermissions'))
+                if message != "True" and self.configFile.get('webshell').get('delpermissions') is True:
+                    print(u"检测到webshell，已删除,所属类型:{}".format(message))
+                elif message != "True" and self.configFile.get('webshell').get('delpermissions') is True:
+                    print(u"检测到webshell，未有删除权限,所属类型:{}".format(message))
+                elif message == "True":
+                    pass
 
     def on_deleted(self, event):
         if event.is_directory:
@@ -41,9 +51,14 @@ class FileHandler(FileSystemEventHandler):
             print(u"{} 文件被修改".format(event.src_path))
         if os.path.isfile(event.src_path):
             webshellscanner = webshellScan.WebshellScanner()
-            message = webshellscanner.file2shellCompare(event.src_path)
-            if message is not "True":
+            message = webshellscanner.file2shellCompare(event.src_path,
+                                                        self.configFile.get('webshell').get('delpermissions'))
+            if message != "True" and self.configFile.get('webshell').get('delpermissions') is True:
                 print(u"检测到webshell，已删除,所属类型:{}".format(message))
+            elif message != "True" and self.configFile.get('webshell').get('delpermissions') is True:
+                print(u"检测到webshell，未有删除权限,所属类型:{}".format(message))
+            elif message == "True":
+                pass
         pass
 
     def on_moved(self, event):

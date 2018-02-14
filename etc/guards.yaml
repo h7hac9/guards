@@ -9,4 +9,7 @@
    change: True   #进程检查(是否有新进程创建)
    privilgeEscalation: True  #提权行为检查
    timeout: 10 #单位s
+ webshell:
+    check: True
+    delpermissions: True  #查出webshell之后，是否直接删除
  other:
