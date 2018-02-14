@@ -2,6 +2,8 @@
 #!/usr/bin/python
 
 from watchdog.events import FileSystemEventHandler
+from webshellcheck import webshellScan
+import os
 
 
 class FileHandler(FileSystemEventHandler):
@@ -18,6 +20,11 @@ class FileHandler(FileSystemEventHandler):
             print(u"{} 文件夹被创建".format(event.src_path))
         else :
             print(u"{} 文件被创建".format(event.src_path))
+        if os.path.isfile(event.src_path):
+            webshellscanner = webshellScan.WebshellScanner()
+            message = webshellscanner.file2shellCompare(event.src_path)
+            if message is not "True":
+                print(u"检测到webshell，已删除,所属类型:{}".format(message))
         pass
 
     def on_deleted(self, event):
@@ -32,6 +39,11 @@ class FileHandler(FileSystemEventHandler):
             print(u"{} 文件夹被修改".format(event.src_path))
         else :
             print(u"{} 文件被修改".format(event.src_path))
+        if os.path.isfile(event.src_path):
+            webshellscanner = webshellScan.WebshellScanner()
+            message = webshellscanner.file2shellCompare(event.src_path)
+            if message is not "True":
+                print(u"检测到webshell，已删除,所属类型:{}".format(message))
         pass
 
     def on_moved(self, event):
