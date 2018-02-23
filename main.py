@@ -56,7 +56,7 @@ def mainfilecheck(root):
 def watchdogmethod(path):
     event_handler = FileHandler()
     observer = Observer()
-    observer.schedule(event_handler, path=path, recursive=False)
+    observer.schedule(event_handler, path=path, recursive=True)
     observer.start()
     try:
         while True:
