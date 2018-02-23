@@ -2,6 +2,8 @@
 
 import psutil
 
+from config import logger
+
 class ProcessScaner(object):
     def __init__(self):
         pass
@@ -32,14 +34,18 @@ class ProcessScaner(object):
         oldStopPidList = set(oldPidList) - set(newPidList)
         newStartPidList = set(newPidList) - set(oldPidList)
         if oldStopPidList.__len__() != 0:
-            print(u"某些进程被关闭:\n")
+            logger.info(u"某些进程被关闭:\n")
+            # print(u"某些进程被关闭:\n")
             for i in oldStopPidList:
-                print(str(oldPidInformation[i][0]) + "\t" + str(oldPidInformation[1]) + "\t" + "\n")
+                logger.info(str(oldPidInformation[i][0]) + "\t" + str(oldPidInformation[1]) + "\t" + "\n")
+                # print(str(oldPidInformation[i][0]) + "\t" + str(oldPidInformation[1]) + "\t" + "\n")
             return None
         if newStartPidList.__len__() != 0:
-            print(u"某些新进程被创建:\n")
+            logger.info(u"某些新进程被创建:\n")
+            # print(u"某些新进程被创建:\n")
             for i in newStartPidList:
-                print(str(newPidInformation[i][0]) + "\t" + str(newPidInformation[1]) + "\t" + "\n")
+                logger.info(str(newPidInformation[i][0]) + "\t" + str(newPidInformation[1]) + "\t" + "\n")
+                # print(str(newPidInformation[i][0]) + "\t" + str(newPidInformation[1]) + "\t" + "\n")
             return newStartPidList
 
     def privilgeEscalation(self, pidList):
@@ -51,6 +57,6 @@ class ProcessScaner(object):
         if pidList is not None:
             for i in pidList:
                 if (int(i) < int(psutil.Process(i).parent().pid)):
-                    print("提权进程被创建")
+                    logger.info(u"提权进程被创建")
                 else:
                     pass

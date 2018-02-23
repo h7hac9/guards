@@ -1,8 +1,7 @@
 ---
  directory:
    target:
-     - /home/asura/Documents/note
-     - /home/asura/Documents/书籍
+     - /home/ubuntu/note
    time: 30 #单位s
    watchdog: True  #推荐使用watchdog
  process:

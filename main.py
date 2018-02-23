@@ -2,6 +2,7 @@
 
 import datetime
 import os
+import sys
 import time
 from multiprocessing import Pool
 from watchdog.observers import Observer
@@ -12,6 +13,7 @@ from filecheck.resultProcessing import ResultProcess
 from configurate.readyaml import yamloperation
 from watchfile.fileMonitoring import FileHandler
 from processcheck.processScan import ProcessScaner
+from config import logger
 
 def mainfilecheck(root):
     tmp_file = str(os.getpid()) + '.txt'
@@ -75,26 +77,34 @@ def processCheck(privilgeEscalation, timeout):
             processScan.privilgeEscalation(pidList=pidList)
 
 def main():
-    pool = Pool() #进程池
-    config = yamloperation('guards.yaml')
-    configFile = config.readConfig()
-    if configFile.get("directory") is not None and configFile.get("directory").get("watchdog") is not True:
-        for i in configFile['directory']['target']:
-            print(i)
-            pool.apply_async(mainfilecheck, args=(i,))
+    if os.geteuid() != 0:
+        print("This program must be run as root. Aborting.")
+        logger.debug("program start error - (Not root)")
+    else:
+        pool = Pool() #进程池
+        try:
+            config = yamloperation('guards.yaml')
+            configFile = config.readConfig()
+        except Exception as e:
+            logger.error("配置文件读取异常 - {}".format(str(e)))
+            sys.exit(1)
 
-    #watchdog 模块
-    if configFile.get("directory") is not None and configFile.get("directory").get("watchdog") is True:
-        for i in configFile['directory']['target']:
-            pool.apply_async(watchdogmethod, args=(i,))
+        if configFile.get("directory") is not None and configFile.get("directory").get("watchdog") is not True:
+            for i in configFile['directory']['target']:
+                print(i)
+                pool.apply_async(mainfilecheck, args=(i,))
 
-    #======进程监控=========
-    if configFile.get("process").get("change") is True:
-        pool.apply_async(processCheck, args=(configFile.get("process").get("privilgeEscalation"),configFile.get("process").get("timeout"),))
+        #watchdog 模块
+        if configFile.get("directory") is not None and configFile.get("directory").get("watchdog") is True:
+            for i in configFile['directory']['target']:
+                pool.apply_async(watchdogmethod, args=(i,))
 
-    pool.close()
-    pool.join()
+        #======进程监控=========
+        if configFile.get("process").get("change") is True:
+            pool.apply_async(processCheck, args=(configFile.get("process").get("privilgeEscalation"),configFile.get("process").get("timeout"),))
 
+        pool.close()
+        pool.join()
 
 
 if __name__ == '__main__':
