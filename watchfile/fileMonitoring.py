@@ -23,12 +23,6 @@ class FileHandler(FileSystemEventHandler):
         :param event: 事件消息
         :return:
         """
-        if event.is_directory:
-            logger.info(u"{} 文件夹被创建".format(event.src_path))
-            # print(u"{} 文件夹被创建".format(event.src_path))
-        else :
-            logger.info(u"{} 文件被创建".format(event.src_path))
-            # print(u"{} 文件被创建".format(event.src_path))
         if self.configFile.get('webshell') is not None and self.configFile.get('webshell').get('check') is True:
             if os.path.isfile(event.src_path):
                 webshellscanner = webshellScan.WebshellScanner()
@@ -41,6 +35,13 @@ class FileHandler(FileSystemEventHandler):
                     # print(u"检测到webshell，未有删除权限,所属类型:{}".format(message))
                 elif message == "True":
                     pass
+        else:
+            if event.is_directory:
+                logger.info(u"{} 文件夹被创建".format(event.src_path))
+                # print(u"{} 文件夹被创建".format(event.src_path))
+            else :
+                logger.info(u"{} 文件被创建".format(event.src_path))
+                # print(u"{} 文件被创建".format(event.src_path))
 
     def on_deleted(self, event):
         if event.is_directory:
@@ -52,12 +53,6 @@ class FileHandler(FileSystemEventHandler):
         pass
 
     def on_modified(self, event):
-        if event.is_directory:
-            logger.info(u"{} 文件夹被修改".format(event.src_path))
-            # print(u"{} 文件夹被修改".format(event.src_path))
-        else :
-            logger.info(u"{} 文件被修改".format(event.src_path))
-            # print(u"{} 文件被修改".format(event.src_path))
         if os.path.isfile(event.src_path):
             webshellscanner = webshellScan.WebshellScanner()
             message = webshellscanner.file2shellCompare(event.src_path,
@@ -70,6 +65,13 @@ class FileHandler(FileSystemEventHandler):
                 # print(u"检测到webshell，未有删除权限,所属类型:{}".format(message))
             elif message == "True":
                 pass
+        else:
+            if event.is_directory:
+                logger.info(u"{} 文件夹被修改".format(event.src_path))
+                # print(u"{} 文件夹被修改".format(event.src_path))
+            else :
+                logger.info(u"{} 文件被修改".format(event.src_path))
+                # print(u"{} 文件被修改".format(event.src_path))
         pass
 
     def on_moved(self, event):
